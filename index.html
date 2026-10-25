@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAEVRIZ | Imagine What's Next</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #0b0b18;
+      color: white;
+      line-height: 1.6;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 22px 8%;
+      border-bottom: 1px solid #29243e;
+      backdrop-filter: blur(12px);
+    }
+
+    .logo {
+      color: white;
+      font-size: 25px;
+      font-weight: bold;
+      text-decoration: none;
+      letter-spacing: 2px;
+    }
+
+    .logo span {
+      color: #a78bfa;
+    }
+
+
+nav a {
+  color: #d8d5e8;
+  text-decoration: none;
+  padding: 8px 4px;
+  display: inline-block;
+}
+
+
+nav a:hover {
+  color: #a78bfa;
+  transition: color 0.25s ease;
+}
+
+.hero {
+  text-align: center;
+  padding: 80px 20px 70px;
+  background:
+    radial-gradient(ellipse at 50% 0%, #493078 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 70%, #201849 0%, transparent 45%),
+    #0b0b18;
+  position: relative;
+  overflow: hidden;
+}
+
+    .tag {
+      color: #c4b5fd;
+      letter-spacing: 3px;
+      font-size: 12px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 8vw, 76px);
+      line-height: 1.1;
+      margin-bottom: 22px;
+    }
+
+    h1 span {
+      color: #a78bfa;
+    }
+
+    .hero p {
+      max-width: 500px;
+      margin: 0 auto 30px;
+      color: #c3bfd6;
+    }
+
+
+.btn {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: 0 0 22px #a78bfa35;
+}
+
+.btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 32px #a78bfa80;
+}
+
+@keyframes maevrizReveal {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero .tag {
+  animation: maevrizReveal 0.8s ease both;
+}
+
+.hero h1 {
+  animation: maevrizReveal 1s ease 0.15s both;
+}
+
+.hero p {
+  animation: maevrizReveal 1s ease 0.3s both;
+}
+
+.hero .btn {
+  animation: maevrizReveal 1s ease 0.45s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero .tag,
+  .hero h1,
+  .hero p,
+  .hero .btn {
+    animation: none;
+  }
+}
+ 
+    section {
+      padding: 65px 8%;
+    }
+
+    .section-title {
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .intro {
+      color: #b8b4ca;
+      margin-bottom: 28px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 24px;
+    }
+
+    .card {
+      background: #151426;
+      border: 1px solid #302a48;
+      border-radius: 16px;
+      padding: 28px;
+    }
+
+.card {
+  transition: transform 0.3s ease, border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: #a78bfa;
+  box-shadow: 0 12px 35px #a78bfa20;
+}
+
+    .card h3 {
+      margin: 12px 0;
+      font-size: 22px;
+    }
+
+    .card p {
+      color: #b8b4ca;
+      margin-bottom: 20px;
+    }
+
+    .card a {
+      color: #c4b5fd;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .icon {
+      font-size: 30px;
+    }
+
+    .about {
+      background: #111020;
+      text-align: center;
+    }
+
+    .about p {
+      max-width: 650px;
+      margin: 15px auto 0;
+      color: #b8b4ca;
+    }
+
+    footer {
+      padding: 25px;
+      text-align: center;
+      color: #88849e;
+      border-top: 1px solid #29243e;
+      font-size: 13px;
+    }
+  .footer-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 12px;
+}
+
+.footer-links a {
+  color: #c4b5fd;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: white;
+}
+  
+.footer-links {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 12px;
+}
+
+.footer-links a {
+  color: #c4b5fd;
+  text-decoration: none;
+}
+
+.footer-links a:hover {
+  color: white;
+}
+
+@media (max-width: 650px) {
+  nav {
+    padding: 16px 5%;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .logo {
+    font-size: 22px;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a class="logo" href="home.html">MAEVR<span>IZ</span></a>
+    <a href="#products">Our Products ↓</a>
+    <a href="about.html">About Us ↗</a>
+  </nav>
+
+  <header class="hero">
+    <div class="tag">WELCOME TO MAEVRIZ</div>
+
+    <h1>Imagine<br><span>What's Next.</span></h1>
+
+    <p>
+      We are building digital experiences that help students
+      stay organised, explore ideas and move towards a smarter future.
+    </p>
+
+    <a class="btn" href="#products">Explore Our World</a>
+  </header>
+
+  <section id="products">
+    <h2 class="section-title">What We're Building</h2>
+    <p class="intro">Small ideas today. Bigger possibilities tomorrow.</p>
+
+    <div class="cards">
+      <div class="card">
+        <div class="icon">📚</div>
+        <h3>Student Hub</h3>
+        <p>
+          Your personal space to organise tasks, manage deadlines
+          and track your study progress.
+        </p>
+        <a href="student-hub.html">Student Hub</a>
+      </div>
+
+      <div class="card">
+        <div class="icon">💡</div>
+        <h3>Future Tools</h3>
+        <p>
+          A space for new ideas, useful technology and digital
+          tools we're dreaming up.
+        </p>
+        <a href="#about">Discover MAEVRIZ →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <h2 class="section-title">Ideas Into Reality.</h2>
+    <p>
+      MAEVRIZ is a young technology venture driven by curiosity,
+      creativity and the belief that useful ideas can make everyday
+      life better. This is just the beginning.
+    </p>
+  </section>
+
+
+<footer>
+  <p>© 2026 MAEVRIZ. Imagine What's Next.</p>
+
+  <p class="footer-links">
+    <a href="home.html">Home</a>
+    <a href="about.html">About MAEVRIZ</a>
+    <a href="index.html">Student Hub</a>
+  </p>
+</footer>
+
+</body>
+</html>

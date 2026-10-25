@@ -1,0 +1,400 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About MAEVRIZ | Imagine What's Next</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #080914;
+      color: #f7f5ff;
+      line-height: 1.7;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 7%;
+      border-bottom: 1px solid #29243e;
+      background: #080914;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .logo span {
+      color: #a78bfa;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      font-size: 14px;
+      color: #c9c5db;
+    }
+
+    .nav-links a:hover {
+      color: #c4b5fd;
+    }
+
+    .hero {
+      padding: 100px 8% 85px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse at 50% 0%, #302054 0%, transparent 65%),
+        #080914;
+    }
+
+    .eyebrow {
+      color: #c4b5fd;
+      font-size: 12px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-size: clamp(42px, 8vw, 76px);
+      line-height: 1.08;
+      letter-spacing: -2px;
+      margin-bottom: 25px;
+    }
+
+    h1 span {
+      color: #b9a0ff;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: auto;
+      color: #c2bfd4;
+      font-size: 17px;
+    }
+
+    .section {
+      padding: 75px 8%;
+    }
+
+    .section-label {
+      color: #b9a0ff;
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: clamp(29px, 5vw, 43px);
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .muted {
+      color: #b9b5cb;
+    }
+
+    .story {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .story-panel {
+      min-height: 270px;
+      padding: 35px;
+      border: 1px solid #383052;
+      border-radius: 22px;
+      background: linear-gradient(145deg, #1c1930, #0e0e1b);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .orb {
+      width: 100px;
+      height: 100px;
+      margin-bottom: 25px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 25%, #eee5ff, #a78bfa 25%, #6545ba 60%, #201638 75%);
+      box-shadow: 0 0 50px #8b5cf655;
+    }
+
+    .values {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .value-card {
+      padding: 25px;
+      border: 1px solid #302a48;
+      background: #11111f;
+      border-radius: 16px;
+    }
+
+    .value-card .symbol {
+      font-size: 27px;
+    }
+
+    .value-card h3 {
+      margin: 12px 0 8px;
+    }
+
+    .value-card p {
+      color: #b9b5cb;
+      font-size: 14px;
+    }
+
+    .founder {
+      background: linear-gradient(180deg, #100f20, #0b0b16);
+    }
+
+    .founder-card {
+      max-width: 850px;
+      margin: 30px auto 0;
+      padding: 35px;
+      display: grid;
+      grid-template-columns: 130px 1fr;
+      gap: 28px;
+      align-items: center;
+      border: 1px solid #40345f;
+      border-radius: 22px;
+      background: #171528;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #b9a0ff, #50318f);
+      color: #100c1d;
+      font-size: 35px;
+      font-weight: bold;
+      box-shadow: 0 0 35px #a78bfa30;
+    }
+
+    .founder-card h3 {
+      font-size: 25px;
+      margin-bottom: 5px;
+    }
+
+    .role {
+      color: #c4b5fd;
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
+
+    .founder-card p {
+      color: #c2bfd4;
+    }
+
+    .quote {
+      text-align: center;
+      padding: 65px 8%;
+    }
+
+    .quote p {
+      font-size: clamp(23px, 4vw, 36px);
+      font-weight: bold;
+    }
+
+    .quote span {
+      color: #b9a0ff;
+    }
+
+    .back {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 12px 20px;
+      border: 1px solid #7661ad;
+      border-radius: 9px;
+      color: #d8ccff;
+    }
+
+    footer {
+      padding: 25px;
+      border-top: 1px solid #29243e;
+      text-align: center;
+      color: #858198;
+      font-size: 13px;
+    }
+
+    @media (max-width: 650px) {
+      nav {
+        align-items: flex-start;
+        gap: 15px;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .hero {
+        padding: 75px 7% 65px;
+      }
+
+      .story {
+        grid-template-columns: 1fr;
+      }
+
+      .founder-card {
+        grid-template-columns: 1fr;
+        padding: 25px;
+      }
+
+      .avatar {
+        width: 95px;
+        height: 95px;
+      }
+
+      .section {
+        padding: 55px 7%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <nav>
+    <a class="logo" href="home.html">MAEVR<span>IZ</span></a>
+
+    <div class="nav-links">
+      <a href="home.html">Home</a>
+      <a href="#story">Our Story</a>
+      <a href="#values">Our Values</a>
+      <a href="#founder">Founder</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="eyebrow">The vision behind the brand</div>
+    <h1>We imagine.<br><span>We create. We evolve.</span></h1>
+    <p>
+      MAEVRIZ is a growing technology venture built around curiosity,
+      creativity and the ambition to turn meaningful ideas into
+      useful digital experiences.
+    </p>
+  </header>
+
+  <section class="section" id="story">
+    <div class="story">
+      <div>
+        <div class="section-label">Our story</div>
+        <h2>Built on ideas.<br>Driven by possibility.</h2>
+        <p class="muted">
+          MAEVRIZ began with a simple belief: technology should do
+          more than look impressive. It should help people think,
+          create, learn and solve everyday problems.
+        </p>
+        <br>
+        <p class="muted">
+          Our journey starts with Student Hub, a tool designed to
+          help students organise their work and keep track of their
+          goals. It's one step in a much bigger journey of exploration.
+        </p>
+      </div>
+
+      <div class="story-panel">
+        <div class="orb"></div>
+        <div class="section-label">Our mission</div>
+        <h2>Make ideas useful.</h2>
+        <p class="muted">
+          Create thoughtful digital tools that make everyday
+          experiences simpler, smarter and more inspiring.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="values">
+    <div class="section-label">What guides us</div>
+    <h2>Our core values.</h2>
+    <p class="muted">The principles behind every idea we explore.</p>
+
+    <div class="values">
+      <div class="value-card">
+        <div class="symbol">✦</div>
+        <h3>Curiosity</h3>
+        <p>We keep asking questions, exploring new possibilities and learning as we build.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="symbol">⌘</div>
+        <h3>Innovation</h3>
+        <p>We look for fresh approaches to everyday challenges and turn ideas into experiments.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="symbol">◇</div>
+        <h3>Purpose</h3>
+        <p>We aim to build digital experiences that are useful, thoughtful and easy to understand.</p>
+      </div>
+
+      <div class="value-card">
+        <div class="symbol">∞</div>
+        <h3>Growth</h3>
+        <p>We believe every project is an opportunity to improve, adapt and think bigger.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section founder" id="founder">
+    <div class="section-label">The person behind the idea</div>
+    <h2>Meet the founder.</h2>
+
+    <div class="founder-card">
+      <div class="avatar">Y</div>
+
+      <div>
+        <h3>Yashmirra</h3>
+        <div class="role">Founder of MAEVRIZ</div>
+        <p>
+          A student creator with a passion for technology, design
+          and building ideas from the ground up. MAEVRIZ is a space
+          to learn by doing, experiment with new possibilities and
+          create digital tools with purpose.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="quote">
+    <p>“The future isn't just something we wait for.<br>
+      It's something we <span>build.</span>”</p>
+
+    <a class="back" href="home.html">← Back to MAEVRIZ Home</a>
+  </section>
+
+  <footer>
+    © 2026 MAEVRIZ · Imagine What's Next.
+  </footer>
+</body>
+</html>

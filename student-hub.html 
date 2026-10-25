@@ -1,0 +1,271 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <title>Student Hub — MAEVRIZ</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#home">MAEVRIZ<span>.</span></a>
+    <span class="brand-tag">IMAGINE WHAT'S NEXT</span>
+  </header>
+
+<span class="founder-credit">Founded by Yashmirra Raman</span>
+
+  <main class="container" id="home">
+    <section class="hero">
+      <div class="eyebrow"><span class="live-dot"></span> YOUR PERSONAL WORKSPACE</div>
+      <h1>Make today<br><span>count.</span></h1>
+      <p>One focused step at a time. Your subjects, your goals, your way.</p>
+    </section>
+
+    <section class="stats-grid" aria-label="Task statistics">
+      <article class="stat-card">
+        <span class="stat-label">TOTAL TASKS</span>
+        <strong id="totalCount">0</strong>
+        <span class="stat-foot">All your tasks</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">COMPLETED</span>
+        <strong id="completedCount">0</strong>
+        <span class="stat-foot">Wins so far</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">REMAINING</span>
+        <strong id="remainingCount">0</strong>
+        <span class="stat-foot">Keep moving</span>
+      </article>
+    </section>
+
+    <section class="panel progress-panel">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">YOUR MOMENTUM</div>
+          <h2>Progress overview</h2>
+        </div>
+        <span class="percent" id="progressPercent">0%</span>
+      </div>
+      <div class="progress-track" id="progressBar" role="progressbar"
+           aria-label="Task completion" aria-valuemin="0"
+           aria-valuemax="100" aria-valuenow="0">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <p id="progressMessage" class="muted">Your next win starts here.</p>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">PERSONAL SETUP</div>
+          <h2>My subjects</h2>
+          <p class="muted small">Create the subjects that fit your life.</p>
+        </div>
+        <span class="section-number">01</span>
+      </div>
+
+      <form id="subjectForm" class="subject-form">
+        <label class="sr-only" for="newSubject">Subject name</label>
+        <input id="newSubject" maxlength="40"
+               placeholder="e.g. Mathematics" required>
+        <button class="primary-button" type="submit">Add subject <span>＋</span></button>
+      </form>
+      <p id="subjectMessage" class="message" role="status"></p>
+      <div id="subjectList" class="subject-list"></div>
+    </section>
+
+    <section class="panel" id="taskEditor">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">PLAN WITH PURPOSE</div>
+          <h2 id="formHeading">Create a task</h2>
+          <p class="muted small">Capture the details and get it out of your head.</p>
+        </div>
+        <span class="section-number">02</span>
+      </div>
+
+      <form id="taskForm">
+        <label for="taskTitle">Task title <span class="required">*</span></label>
+        <input id="taskTitle" maxlength="120"
+               placeholder="What do you need to do?" required>
+
+        <div class="form-grid">
+          <div>
+            <label>Subject</label>
+            <div id="taskSubjectControl" class="custom-select"></div>
+          </div>
+          <div>
+            <label for="taskDeadline">Deadline</label>
+            <input id="taskDeadline" type="date">
+          </div>
+          <div>
+            <label>Priority</label>
+            <div id="taskPriorityControl" class="custom-select"></div>
+          </div>
+          <div>
+            <label for="taskCategory">Category</label>
+            <input id="taskCategory" maxlength="40"
+                   placeholder="Homework, revision...">
+          </div>
+        </div>
+
+        <label for="taskNotes">Notes <span class="optional">OPTIONAL</span></label>
+        <textarea id="taskNotes" maxlength="1000" rows="3"
+                  placeholder="Instructions, reminders or useful details..."></textarea>
+
+        <div class="button-row">
+          <button class="primary-button" id="saveTaskButton" type="submit">
+            <span>＋</span> Add task
+          </button>
+          <button class="secondary-button hidden" id="cancelEditButton"
+                  type="button">Cancel</button>
+        </div>
+        <p id="formMessage" class="message" role="status"></p>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">STAY IN CONTROL</div>
+          <h2>Your tasks</h2>
+          <p class="muted small">Find the next thing that matters.</p>
+        </div>
+        <span class="count-pill" id="listCount">0 tasks</span>
+      </div>
+
+      <label for="searchTasks">Search</label>
+      <div class="search-wrap">
+        <span aria-hidden="true">⌕</span>
+        <input id="searchTasks" type="search"
+               placeholder="Search titles, notes, categories...">
+      </div>
+
+      <div class="form-grid filter-grid">
+        <div>
+          <label>Subject filter</label>
+          <div id="filterSubjectControl" class="custom-select"></div>
+        </div>
+        <div>
+          <label>Priority filter</label>
+          <div id="filterPriorityControl" class="custom-select"></div>
+        </div>
+      </div>
+
+      <div class="segmented" aria-label="Task status">
+        <button class="segment active" data-filter="all"
+                aria-pressed="true" type="button">All tasks</button>
+        <button class="segment" data-filter="active"
+                aria-pressed="false" type="button">To do</button>
+        <button class="segment" data-filter="completed"
+                aria-pressed="false" type="button">Completed</button>
+      </div>
+
+      <div class="view-switch">
+        <button class="view-button active" data-view="list"
+                aria-pressed="true" type="button">☷ List</button>
+        <button class="view-button" data-view="calendar"
+                aria-pressed="false" type="button">▦ Calendar</button>
+      </div>
+
+      <div id="taskList" class="task-list" aria-live="polite"></div>
+
+      <div id="calendarView" class="hidden">
+        <div class="calendar-heading">
+          <button id="previousMonth" class="icon-button"
+                  type="button" aria-label="Previous month">←</button>
+          <h3 id="calendarMonth"></h3>
+          <button id="nextMonth" class="icon-button"
+                  type="button" aria-label="Next month">→</button>
+        </div>
+        <div id="calendarGrid" class="calendar-grid"></div>
+        <p class="muted small">Choose a date to view its tasks.</p>
+        <div id="selectedDayTasks"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">SMALL STEPS ADD UP</div>
+          <h2>Subject progress</h2>
+          <p class="muted small">See where you're making progress.</p>
+        </div>
+        <span class="section-number">03</span>
+      </div>
+      <div id="subjectProgress" class="subject-progress"></div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <div class="eyebrow">MAKE IT YOURS</div>
+          <h2>Appearance</h2>
+          <p class="muted small">Build a colour palette that feels like you.</p>
+        </div>
+        <span class="section-number">04</span>
+      </div>
+
+      <label>Accent colour</label>
+      <div id="themePalette" class="theme-palette">
+        <button type="button" class="swatch" data-color="#8b7bff"
+                style="--swatch:#8b7bff" aria-label="Violet"></button>
+        <button type="button" class="swatch" data-color="#4f8cff"
+                style="--swatch:#4f8cff" aria-label="Blue"></button>
+        <button type="button" class="swatch" data-color="#36d6b0"
+                style="--swatch:#36d6b0" aria-label="Mint"></button>
+        <button type="button" class="swatch" data-color="#ff7ab6"
+                style="--swatch:#ff7ab6" aria-label="Pink"></button>
+        <button type="button" class="swatch" data-color="#ffb454"
+                style="--swatch:#ffb454" aria-label="Orange"></button>
+        <button type="button" class="swatch" data-color="#e7e9ff"
+                style="--swatch:#e7e9ff" aria-label="White"></button>
+      </div>
+
+      <div class="form-grid theme-grid">
+        <div>
+          <label for="themeBackground">Background</label>
+          <input id="themeBackground" type="color" value="#0b1020">
+        </div>
+        <div>
+          <label for="themeAccentHex">Custom accent hex</label>
+          <input id="themeAccentHex" maxlength="7"
+                 placeholder="#8b7bff" value="#8b7bff">
+        </div>
+      </div>
+      <button type="button" id="resetTheme" class="secondary-button">
+        Reset to MAEVRIZ colours
+      </button>
+      <p class="muted small">Your appearance settings are saved in this browser.</p>
+    </section>
+
+    <footer class="footer">
+      <a class="brand" href="#home">MAEVRIZ<span>.</span></a>
+      <p>Small steps. Big progress.</p>
+      <p class="privacy-note">Your data stays in this browser on this device.</p>
+    </footer>
+  </main>
+  
+<section class="founder-section" id="founder">
+  <div class="founder-label">THE PERSON BEHIND MAEVRIZ</div>
+  <h2>Meet the Founder</h2>
+
+  <div class="founder-card">
+    <div class="founder-avatar">YR</div>
+    <div class="founder-info">
+      <h3>Yashmirra Raman</h3>
+      <p class="founder-role">Founder of MAEVRIZ</p>
+      <p class="founder-description">
+        Turning creative ideas into useful digital experiences.
+        MAEVRIZ is a journey of learning, building, and imagining
+        what comes next.
+      </p>
+    </div>
+  </div>
+</section>
+</body>
+</html>
