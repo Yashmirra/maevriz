@@ -1,0 +1,473 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Hub | MAEVRIZ</title>
+<style>
+:root {
+  --bg:#100d1b;
+  --panel:#1b1729;
+  --card:#252039;
+  --text:#f6f2ff;
+  --muted:#b8aecb;
+  --accent:#a78bfa;
+  --border:#39304f;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,sans-serif;line-height:1.5;
+}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--accent);outline-offset:2px
+}
+header{
+  padding:22px 5%;border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  gap:14px;flex-wrap:wrap;background:var(--panel)
+}
+.brand{font-size:23px;font-weight:800;letter-spacing:2px}
+.brand span{color:var(--accent)}
+.small{font-size:12px;color:var(--muted)}
+.wrap{max-width:1150px;margin:auto;padding:24px 5% 50px}
+.hero{
+  padding:28px;border:1px solid var(--border);border-radius:20px;
+  background:linear-gradient(135deg,var(--panel),var(--card));
+  margin-bottom:22px
+}
+.hero h1{font-size:clamp(27px,5vw,43px);margin:7px 0}
+.hero p{color:var(--muted);margin-bottom:0}
+.eyebrow{color:var(--accent);font-size:12px;font-weight:bold;letter-spacing:2px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:22px}
+.stat,.panel,.subject-card{
+  background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:18px
+}
+.stat strong{display:block;font-size:25px;color:var(--accent)}
+.stat span{color:var(--muted);font-size:13px}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.panel{min-width:0;margin-bottom:18px}
+.panel h2{font-size:19px;margin:0 0 5px}
+.desc{font-size:13px;color:var(--muted);margin:0 0 16px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+input,textarea,select{
+  background:var(--bg);color:var(--text);border:1px solid var(--border);
+  border-radius:9px;padding:11px;width:100%;min-width:0
+}
+textarea{resize:vertical;min-height:100px}
+label{display:block;font-size:12px;color:var(--muted);margin:10px 0 5px}
+.field{flex:1;min-width:120px}
+.btn{
+  border:1px solid var(--border);border-radius:9px;padding:10px 13px;
+  background:var(--card);color:var(--text)
+}
+.btn.primary{background:var(--accent);color:#170e29;border-color:var(--accent);font-weight:bold}
+.btn.danger{color:#ffb4c0}
+.btn:active{transform:scale(.98)}
+.list{display:grid;gap:10px;margin-top:14px}
+.subject-card{padding:14px;border-left:4px solid var(--subject,var(--accent))}
+.subject-head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.subject-name{font-weight:bold;overflow-wrap:anywhere}
+.subject-notes{font-size:12px;color:var(--muted)}
+.item{padding:12px;background:var(--card);border:1px solid var(--border);border-radius:11px}
+.item-title{font-weight:bold;overflow-wrap:anywhere}
+.item small{color:var(--muted)}
+.item.done .item-title{text-decoration:line-through;opacity:.65}
+.item-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.item-actions .btn{padding:6px 9px;font-size:12px}
+.empty{color:var(--muted);font-size:13px;padding:12px 0}
+.note-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+.note-layout .row{align-items:stretch}
+.note-layout .row>*{flex:1}
+.color-input{height:43px;padding:4px;max-width:60px}
+.check{width:auto;accent-color:var(--accent)}
+footer{text-align:center;padding:20px;color:var(--muted);font-size:12px}
+#toast{color:var(--accent);font-size:12px;min-height:18px;margin-top:8px}
+@media(max-width:680px){
+ .layout{grid-template-columns:1fr}
+ .stats{gap:8px}
+ .stat{padding:12px}
+ .stat strong{font-size:21px}
+ .hero{padding:20px}
+ header{padding:18px 5%}
+}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <div class="brand">MAE<span>VRIZ</span></div>
+<div class="small">Yashmirra's Student Hub</div>
+    <div class="small">YOUR PERSONAL STUDENT SPACE</div>
+  </div>
+  <button class="btn" onclick="showSettings()">⚙ Customise</button>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow">YOUR SPACE TO GROW</div>
+    <h1>Study smarter. Dream bigger.</h1>
+    <p>Your subjects, your notes, your plans. Make this space yours.</p>
+    <p id="today" class="small"></p>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><strong id="subjectCount">0</strong><span>My subjects</span></div>
+    <div class="stat"><strong id="taskCount">0</strong><span>Tasks remaining</span></div>
+    <div class="stat"><strong id="goalCount">0</strong><span>Goals completed</span></div>
+  </section>
+
+  <section class="panel" id="settings" hidden>
+    <h2>Personalise your hub 🎨</h2>
+    <p class="desc">Choose your own colours and display name.</p>
+    <label for="displayName">What should we call your hub?</label>
+    <input id="displayName" maxlength="50" placeholder="My Student Hub">
+    <div class="row">
+      <div class="field"><label for="bgColor">Background</label><input class="color-input" type="color" id="bgColor" value="#100d1b"></div>
+      <div class="field"><label for="panelColor">Panel colour</label><input class="color-input" type="color" id="panelColor" value="#1b1729"></div>
+      <div class="field"><label for="accentColor">Accent colour</label><input class="color-input" type="color" id="accentColor" value="#a78bfa"></div>
+    </div>
+    <div class="row" style="margin-top:14px">
+      <button class="btn primary" onclick="saveSettings()">Save theme</button>
+      <button class="btn" onclick="resetTheme()">Reset colours</button>
+      <button class="btn" onclick="showSettings()">Close</button>
+    </div>
+  </section>
+
+  <div class="layout">
+    <div>
+      <section class="panel">
+        <h2>📚 My Subjects</h2>
+        <p class="desc">Add any subject you want. Choose its own name and colour.</p>
+        <form id="subjectForm">
+          <label for="subjectName">Subject name</label>
+          <input id="subjectName" maxlength="60" placeholder="e.g. Mathematics, Art, Coding" required>
+          <div class="row">
+            <div class="field"><label for="subjectColor">Subject colour</label><input class="color-input" type="color" id="subjectColor" value="#a78bfa"></div>
+            <div class="field"><label for="subjectDesc">Description (optional)</label><input id="subjectDesc" maxlength="100" placeholder="What are you studying?"></div>
+          </div>
+          <button class="btn primary" style="margin-top:12px" type="submit">+ Add subject</button>
+        </form>
+        <div id="subjects" class="list"></div>
+      </section>
+
+      <section class="panel">
+        <h2>📝 My Notes</h2>
+        <p class="desc">Write and save your own notes for any subject.</p>
+        <form id="noteForm">
+          <label for="noteSubject">Subject</label>
+          <select id="noteSubject" required></select>
+          <label for="noteTitle">Note title</label>
+          <input id="noteTitle" maxlength="100" placeholder="e.g. Chapter 1 revision" required>
+          <label for="noteBody">Your notes</label>
+          <textarea id="noteBody" maxlength="30000" placeholder="Write your notes here..." required></textarea>
+          <button class="btn primary" type="submit" style="margin-top:12px">Save note</button>
+        </form>
+        <div id="notes" class="list"></div>
+      </section>
+    </div>
+
+    <div>
+      <section class="panel">
+        <h2>📅 Study Planner</h2>
+        <p class="desc">Create your own tasks and deadlines.</p>
+        <form id="taskForm">
+          <label for="taskTitle">Task name</label>
+          <input id="taskTitle" maxlength="150" placeholder="What do you need to do?" required>
+          <div class="row">
+            <div class="field"><label for="taskSubject">Subject</label><select id="taskSubject"></select></div>
+            <div class="field"><label for="taskDate">Deadline</label><input id="taskDate" type="date"></div>
+          </div>
+          <label for="taskPriority">Priority</label>
+          <select id="taskPriority">
+            <option>Normal</option><option>High</option><option>Low</option>
+          </select>
+          <button class="btn primary" type="submit" style="margin-top:12px">+ Add task</button>
+        </form>
+        <div id="tasks" class="list"></div>
+      </section>
+
+      <section class="panel">
+        <h2>🎯 My Goals</h2>
+        <p class="desc">Set your own goals and celebrate your progress.</p>
+        <form id="goalForm">
+          <label for="goalTitle">My goal</label>
+          <input id="goalTitle" maxlength="150" placeholder="e.g. Finish my revision" required>
+          <button class="btn primary" type="submit" style="margin-top:12px">+ Add goal</button>
+        </form>
+        <div id="goals" class="list"></div>
+      </section>
+
+      <section class="panel">
+        <h2>💾 Your data</h2>
+        <p class="desc">Your hub saves changes in this browser on this device. Export a backup to keep your data safe.</p>
+        <div class="row">
+          <button class="btn primary" onclick="exportData()">Export backup</button>
+          <button class="btn" onclick="document.getElementById('importFile').click()">Import backup</button>
+          <input id="importFile" type="file" accept=".json,application/json" hidden>
+        </div>
+        <div id="toast" role="status" aria-live="polite"></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+<footer>MAEVRIZ · Your journey, your way ✦</footer>
+
+<script>
+const KEY = "maevriz_student_hub_v1";
+const defaultTheme = {bg:"#100d1b",panel:"#1b1729",accent:"#a78bfa",name:"MAEVRIZ Student Hub"};
+let data = {theme:{...defaultTheme},subjects:[],notes:[],tasks:[],goals:[]};
+
+const $ = id => document.getElementById(id);
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+
+function escapeHTML(value){
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[c]);
+}
+function validColor(value,fallback){
+  return /^#[0-9a-fA-F]{6}$/.test(value || "") ? value : fallback;
+}
+function toast(message){
+  $("toast").textContent = message;
+}
+function save(){
+  try{
+    localStorage.setItem(KEY,JSON.stringify(data));
+    toast("Saved ✓");
+  }catch(e){
+    toast("Browser storage is unavailable. Please export a backup.");
+  }
+  render();
+}
+function load(){
+  try{
+    const raw = localStorage.getItem(KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      if(parsed && typeof parsed === "object"){
+        data.theme = {...defaultTheme,...(parsed.theme || {})};
+        for(const key of ["subjects","notes","tasks","goals"]){
+          data[key] = Array.isArray(parsed[key]) ? parsed[key] : [];
+        }
+      }
+    }
+  }catch(e){
+    toast("Could not read saved data. You can import a backup.");
+  }
+  applyTheme();
+  render();
+}
+function applyTheme(){
+  const t = data.theme;
+  document.documentElement.style.setProperty("--bg",validColor(t.bg,defaultTheme.bg));
+  document.documentElement.style.setProperty("--panel",validColor(t.panel,defaultTheme.panel));
+  document.documentElement.style.setProperty("--accent",validColor(t.accent,defaultTheme.accent));
+  document.title = (t.name || defaultTheme.name) + " | MAEVRIZ";
+}
+function showSettings(){
+  $("settings").hidden = !$("settings").hidden;
+  $("displayName").value = data.theme.name || defaultTheme.name;
+  $("bgColor").value = validColor(data.theme.bg,defaultTheme.bg);
+  $("panelColor").value = validColor(data.theme.panel,defaultTheme.panel);
+  $("accentColor").value = validColor(data.theme.accent,defaultTheme.accent);
+}
+function saveSettings(){
+  data.theme = {
+    name:$("displayName").value.trim() || defaultTheme.name,
+    bg:$("bgColor").value,
+    panel:$("panelColor").value,
+    accent:$("accentColor").value
+  };
+  applyTheme(); save();
+}
+function resetTheme(){
+  data.theme = {...defaultTheme}; applyTheme(); save(); showSettings();
+}
+function subjectName(id){
+  return data.subjects.find(s=>s.id===id)?.name || "General";
+}
+function makeButton(label,action,extra=""){
+  return `<button type="button" class="btn ${extra}" data-action="${action}">${label}</button>`;
+}
+function render(){
+  applyTheme();
+  $("today").textContent = new Date().toLocaleDateString(undefined,{
+    weekday:"long",year:"numeric",month:"long",day:"numeric"
+  });
+  $("subjectCount").textContent = data.subjects.length;
+  $("taskCount").textContent = data.tasks.filter(t=>!t.done).length;
+  $("goalCount").textContent = data.goals.filter(g=>g.done).length;
+
+  const opts = data.subjects.map(s=>`<option value="${escapeHTML(s.id)}">${escapeHTML(s.name)}</option>`).join("");
+  const general = `<option value="">General / no subject</option>`;
+  $("noteSubject").innerHTML = `<option value="">Choose a subject</option>` + opts + general;
+  $("taskSubject").innerHTML = general + opts;
+
+  $("subjects").innerHTML = data.subjects.length ? data.subjects.map(s=>`
+    <article class="subject-card" style="--subject:${validColor(s.color,defaultTheme.accent)}">
+      <div class="subject-head">
+        <div><div class="subject-name">${escapeHTML(s.name)}</div>
+        <div class="subject-notes">${escapeHTML(s.description || "Your personal subject")}</div></div>
+        <input class="color-input" type="color" aria-label="Change ${escapeHTML(s.name)} colour"
+          data-action="subject-color" data-id="${escapeHTML(s.id)}"
+          value="${validColor(s.color,defaultTheme.accent)}">
+      </div>
+      <div class="item-actions">
+        ${makeButton("Open notes","subject-notes")}
+        ${makeButton("Rename","rename-subject")}
+        ${makeButton("Delete","delete-subject","danger")}
+      </div>
+      <span hidden>${escapeHTML(s.id)}</span>
+    </article>`).join("") : `<p class="empty">No subjects yet. Add your first one above!</p>`;
+
+  $("notes").innerHTML = data.notes.length ? [...data.notes].reverse().map(n=>`
+    <article class="item">
+      <div class="item-title">${escapeHTML(n.title)}</div>
+      <small>${escapeHTML(n.subjectId ? subjectName(n.subjectId) : "General")}</small>
+      <p style="white-space:pre-wrap;overflow-wrap:anywhere">${escapeHTML(n.body)}</p>
+      <div class="item-actions">
+        ${makeButton("Edit","edit-note")}
+        ${makeButton("Delete","delete-note","danger")}
+      </div><span hidden>${escapeHTML(n.id)}</span>
+    </article>`).join("") : `<p class="empty">Your saved notes will appear here.</p>`;
+
+  $("tasks").innerHTML = data.tasks.length ? [...data.tasks].sort((a,b)=>(a.date||"9999").localeCompare(b.date||"9999")).map(t=>`
+    <article class="item ${t.done?"done":""}">
+      <div class="item-title">${escapeHTML(t.title)}</div>
+      <small>${escapeHTML(subjectName(t.subjectId))} · ${escapeHTML(t.priority)} priority
+      ${t.date ? " · Due "+escapeHTML(t.date) : ""}</small>
+      <div class="item-actions">
+        ${makeButton(t.done?"Undo":"Complete","toggle-task")}
+        ${makeButton("Delete","delete-task","danger")}
+      </div><span hidden>${escapeHTML(t.id)}</span>
+    </article>`).join("") : `<p class="empty">No tasks yet. Add one when you're ready.</p>`;
+
+  $("goals").innerHTML = data.goals.length ? data.goals.map(g=>`
+    <article class="item ${g.done?"done":""}">
+      <div class="item-title">${escapeHTML(g.title)}</div>
+      <div class="item-actions">
+        ${makeButton(g.done?"Undo":"Mark complete","toggle-goal")}
+        ${makeButton("Delete","delete-goal","danger")}
+      </div><span hidden>${escapeHTML(g.id)}</span>
+    </article>`).join("") : `<p class="empty">Your goals start here. Add one above!</p>`;
+}
+$("subjectForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const name=$("subjectName").value.trim();
+  if(!name)return;
+  data.subjects.push({id:uid(),name,color:$("subjectColor").value,description:$("subjectDesc").value.trim()});
+  e.target.reset(); $("subjectColor").value=data.theme.accent; save();
+});
+$("noteForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const title=$("noteTitle").value.trim(),body=$("noteBody").value.trim();
+  if(!title||!body)return;
+  data.notes.push({id:uid(),title,body,subjectId:$("noteSubject").value});
+  e.target.reset(); save();
+});
+$("taskForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const title=$("taskTitle").value.trim(); if(!title)return;
+  data.tasks.push({id:uid(),title,subjectId:$("taskSubject").value,date:$("taskDate").value,priority:$("taskPriority").value,done:false});
+  e.target.reset(); save();
+});
+$("goalForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const title=$("goalTitle").value.trim(); if(!title)return;
+  data.goals.push({id:uid(),title,done:false});
+  e.target.reset(); save();
+});
+
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button[data-action]");
+  if(!b)return;
+  const card=b.closest(".item,.subject-card");
+  const id=card?.querySelector("span[hidden]")?.textContent;
+  const action=b.dataset.action;
+  if(action==="subject-notes"){
+    const name=card.querySelector(".subject-name").textContent;
+    $("noteSubject").value=b.dataset.id || data.subjects.find(s=>s.name===name)?.id || "";
+    $("noteTitle").focus();
+    $("noteForm").scrollIntoView({behavior:"smooth",block:"center"});
+    return;
+  }
+  if(action==="rename-subject"){
+    const s=data.subjects.find(x=>x.id===id); if(!s)return;
+    const name=prompt("New subject name:",s.name);
+    if(name && name.trim()) {s.name=name.trim().slice(0,60);save();}
+  }
+  if(action==="delete-subject"){
+    const s=data.subjects.find(x=>x.id===id); if(!s)return;
+    if(confirm(`Delete "${s.name}"? Existing notes will be kept, but will show as General.`)){
+      data.subjects=data.subjects.filter(x=>x.id!==id);
+      data.notes.forEach(n=>{if(n.subjectId===id)n.subjectId=""});
+      data.tasks.forEach(t=>{if(t.subjectId===id)t.subjectId=""});
+      save();
+    }
+  }
+  if(action==="edit-note"){
+    const n=data.notes.find(x=>x.id===id);if(!n)return;
+    const title=prompt("Edit note title:",n.title);if(title===null)return;
+    const body=prompt("Edit note text:",n.body);if(body===null)return;
+    n.title=title.trim().slice(0,100)||n.title;n.body=body.slice(0,30000);save();
+  }
+  if(action==="delete-note" && confirm("Delete this note?")){
+    data.notes=data.notes.filter(x=>x.id!==id);save();
+  }
+  if(action==="toggle-task"){
+    const t=data.tasks.find(x=>x.id===id);if(t){t.done=!t.done;save();}
+  }
+  if(action==="delete-task" && confirm("Delete this task?")){
+    data.tasks=data.tasks.filter(x=>x.id!==id);save();
+  }
+  if(action==="toggle-goal"){
+    const g=data.goals.find(x=>x.id===id);if(g){g.done=!g.done;save();}
+  }
+  if(action==="delete-goal" && confirm("Delete this goal?")){
+    data.goals=data.goals.filter(x=>x.id!==id);save();
+  }
+});
+document.addEventListener("change",e=>{
+  const el=e.target;
+  if(el.dataset.action==="subject-color"){
+    const card=el.closest(".subject-card");
+    const id=card?.querySelector("span[hidden]")?.textContent;
+    const s=data.subjects.find(x=>x.id===id);
+    if(s){s.color=el.value;save();}
+  }
+});
+function exportData(){
+  const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download="maevriz-student-hub-backup.json";a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+  toast("Backup exported. Keep it somewhere safe.");
+}
+$("importFile").addEventListener("change",async e=>{
+  const file=e.target.files[0];if(!file)return;
+  try{
+    const incoming=JSON.parse(await file.text());
+    if(!incoming || !Array.isArray(incoming.subjects) || !Array.isArray(incoming.notes) ||
+       !Array.isArray(incoming.tasks) || !Array.isArray(incoming.goals) ||
+       !incoming.theme || typeof incoming.theme!=="object") throw new Error("Invalid backup");
+    if(!confirm("Import this backup and replace the current Student Hub data? Export your current data first if you want to keep it."))return;
+    data={
+      theme:{...defaultTheme,...incoming.theme},
+      subjects:incoming.subjects,notes:incoming.notes,
+      tasks:incoming.tasks,goals:incoming.goals
+    };
+    save();toast("Backup imported ✓");
+  }catch(err){toast("That backup file could not be imported.");}
+  finally{e.target.value="";}
+});
+load();
+</script>
+</body>
+</html>
